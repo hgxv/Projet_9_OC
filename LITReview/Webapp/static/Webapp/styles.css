@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    background-color: aquamarine;
+    margin: 20%;
+    justify-content: space-evenly;
+}
+.container div {
+    text-align: center;
+}

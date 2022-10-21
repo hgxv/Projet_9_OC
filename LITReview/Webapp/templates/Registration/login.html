@@ -1,0 +1,29 @@
+{% extends "Webapp/base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<div class="container">
+    <div class="registration">
+        <h2>Inscrivez-vous maintenant</h2>
+        <a href="{% url 'register' %}">S'incrire</a>
+    </div>
+
+    <div class="login">
+        <h2>Connectez-Vous</h2>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <p>{{ form.username.label_tag }}</p>
+            <p>{{ form.username }}</p>
+            <p>{{ form.password.label_tag }}</p>
+            <p>{{ form.password }}</p>
+            <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+            <input type="submit" value="login">
+        </form>
+    </div>    
+</div>
+
+{% endblock %}
