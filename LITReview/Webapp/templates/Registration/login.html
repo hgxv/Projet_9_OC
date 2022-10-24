@@ -5,14 +5,13 @@
 {% if form.errors %}
     <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
-
-<div class="container">
-    <div class="registration">
+<div class="row login-row">
+    <div class="registration col">
         <h2>Inscrivez-vous maintenant</h2>
-        <a href="{% url 'register' %}">S'incrire</a>
+        <a class="btn btn-primary" href="{% url 'register' %}">S'incrire</a>
     </div>
 
-    <div class="login">
+    <div class="login col">
         <h2>Connectez-Vous</h2>
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
@@ -21,9 +20,8 @@
             <p>{{ form.password.label_tag }}</p>
             <p>{{ form.password }}</p>
             <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-            <input type="submit" value="login">
+            <input class="btn btn-primary" type="submit" value="Se connecter">
         </form>
     </div>    
 </div>
-
 {% endblock %}

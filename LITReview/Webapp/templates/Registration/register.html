@@ -2,4 +2,16 @@
 
 {% block content %}
     <h1>Inscrivez-vous</h1>
+    <form method="post">
+        {% csrf_token %}
+        <p>Nom d'utilisateur :</p>
+        <p>{{ form.username }}</p>
+
+        <p>Mot de passe :</p>
+        <p>{{ form.password1 }}</p>
+
+        <p>Confirmer mot de passe :</p>
+        <p>{{ form.password2 }}</p>
+        <input class="btn btn-primary" type="submit" value="Créer mon compte">
+    </form>
 {% endblock %}
