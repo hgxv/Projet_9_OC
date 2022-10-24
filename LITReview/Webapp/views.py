@@ -1,13 +1,13 @@
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+
+@login_required
 def index(request):
     user = request.user
     if user.is_authenticated:
         return render(request,
                 "Webapp/index.html")
-    else:
-        return redirect('login/')
 
 
 def register(request):
