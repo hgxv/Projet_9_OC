@@ -1,0 +1,26 @@
+{% extends 'Webapp/base.html' %}
+
+{% block content %}
+
+<div class="row centered">
+    <h2>Créer un ticket</h2>
+
+
+    <form method="POST">
+        {% csrf_token %}
+        <p>{{ form.errors }}</p>
+
+        <p>Titre :</p>
+        <p>{{ form.title }}</p>
+        
+        <p>Description :</p>
+        <p>{{ form.description }}</p>
+        
+        <p>Image :</p>
+        <p>{{ form.image }}</p>
+        
+        <input class="btn btn-primary" type="submit" value="Envoyer">
+    </form>
+</div>
+
+{% endblock %}

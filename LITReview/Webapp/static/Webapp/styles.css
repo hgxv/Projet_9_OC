@@ -1,6 +1,26 @@
 .container {
-    margin-top: 10%;
+    margin-top: 2rem;
+    display: flex;
 }
 .login-row {
     margin-left: 10%;
+}
+.centered {
+    margin-left: auto;
+    margin-right: auto;
+}
+.centered form {
+    margin-top: 2rem;
+}
+.row {
+    justify-content: space-evenly;
+}
+nav {
+    background-color: #e3f2fd;
+}
+.feed-btn {
+    justify-content: space-between;
+}
+.ticket {
+    border: solid
 }

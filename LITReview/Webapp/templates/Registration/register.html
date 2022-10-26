@@ -1,8 +1,11 @@
 {% extends "Webapp/base.html" %}
 
 {% block content %}
+<div class="centered">
     <h1>Inscrivez-vous</h1>
     <form method="post">
+        <p>{{ form.errors }}</p>
+        
         {% csrf_token %}
         <p>Nom d'utilisateur :</p>
         <p>{{ form.username }}</p>
@@ -12,6 +15,8 @@
 
         <p>Confirmer mot de passe :</p>
         <p>{{ form.password2 }}</p>
-        <input class="btn btn-primary" type="submit" value="Créer mon compte">
+        <a class="btn btn-primary btn-sm" href="{% url 'login' %}">Retour</a>
+        <input class="btn btn-primary btn-sm" type="submit" value="Créer mon compte">
     </form>
+</div>
 {% endblock %}

@@ -1,6 +1,12 @@
 {% extends 'Webapp/base.html' %}
 
 {% block content %}
-<h1>Bienvenue sur LITReview !</h1>
-<p>Va contenir le feed</p>
+<p class="centered feed-btn">
+    <a href="{% url 'ticket-create' %}" class="btn btn-primary">Demander une critique</a>
+    <a href="#" class="btn btn-primary">Créer une critique</a>
+</p>
+
+{% block flux %}
+{% endblock %}
+
 {% endblock %}

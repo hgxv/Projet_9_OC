@@ -1,0 +1,29 @@
+{% extends 'Webapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row centered">
+    <div class="ticket">
+        {% if ticket.user == request.user %}
+            <p>Vous avez publié un ticket</p>
+        {% endif %}
+        <p>
+            {{ ticket.title }}
+            {{ ticket.time_created }}
+        </p>
+        {{ ticket.image }}
+        {% static '{{ ticket.image }}' %}
+        {% if ticket.image %}
+            <p><img src="{% static '{{ ticket.image }}' %}" alt=""></p>
+        {% endif %}
+
+        <p>
+            <a href="#" class="btn btn-primary">Modifier</a>
+            <a href="#" class="btn btn-primary">Supprimer</a>
+        </p>
+    </div>
+</div>
+
+
+
+{% endblock %}

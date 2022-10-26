@@ -23,4 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', views.register, name='register'),
     path('registered/', views.registered, name='registered'),
+    path('ticket/', views.ticket_create, name='ticket-create'),
+    path('ticket/<int:ticket_id>/', views.ticket, name='ticket-profil'),
 ]
