@@ -32,7 +32,7 @@ def registered(request):
             "Registration/registered.html",)
 
 
-def ticket(request,ticket_id):
+def ticket(request, ticket_id):
     ticket = Ticket.objects.get(id=ticket_id)
     return render(request,
                 "Webapp/ticket.html",
@@ -40,17 +40,19 @@ def ticket(request,ticket_id):
 
 
 def ticket_create(request):
-    if request == "POST":
+    print(request.user)
+    if request.method == "POST":
         form = TicketForm(request.POST)
-        form.user = request.user
-        print(form)
         if form.is_valid():
-            form.save()
-            return redirect("ticket", form.id)
+            ticket = form.save(commit=False)
+            ticket.user = request.user
+            print(ticket.image)
+            ticket.save()
+            return redirect("ticket-profil", ticket.id)
     
     else:
         form = TicketForm()
 
     return render(request,
             "Webapp/ticket_create.html",
-            {"form": form})
+            {"form": form},)

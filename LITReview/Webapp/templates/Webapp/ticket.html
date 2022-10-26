@@ -11,10 +11,8 @@
             {{ ticket.title }}
             {{ ticket.time_created }}
         </p>
-        {{ ticket.image }}
-        {% static '{{ ticket.image }}' %}
         {% if ticket.image %}
-            <p><img src="{% static '{{ ticket.image }}' %}" alt=""></p>
+            <p><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></p>
         {% endif %}
 
         <p>
