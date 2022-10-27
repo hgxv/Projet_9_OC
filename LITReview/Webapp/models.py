@@ -1,20 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.conf import settings
 
 class Ticket(models.Model):
-        
+    
+    type = "TICKET"
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=2048, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(null=True, blank=True, upload_to='Webapp/media/')
+    image = models.ImageField(null=True,
+                            blank=True,
+                             upload_to='Webapp/media/')
     time_created = models.DateTimeField(auto_now_add=True)
 
 
 class Review(models.Model):
-
-    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
+    
+    type ="REVIEW"
+    ticket = models.ForeignKey(Ticket,
+                            blank=True,
+                            null=True,
+                            on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(validators=[
                                             MinValueValidator(0),
                                             MaxValueValidator(5)

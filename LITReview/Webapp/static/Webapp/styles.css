@@ -6,8 +6,7 @@
     margin-left: 10%;
 }
 .centered {
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto
 }
 .centered form {
     margin-top: 2rem;
@@ -22,5 +21,7 @@ nav {
     justify-content: space-between;
 }
 .ticket {
-    border: solid
+    border: solid;
+    width: 60%;
+    margin-bottom: 2rem;
 }

@@ -1,16 +1,35 @@
+from django.forms import CharField
 from django.shortcuts import redirect, render
+from django.db.models import Value
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from Webapp.forms import TicketForm
 from Webapp.models import Ticket, Review
 
+from itertools import chain
 
 @login_required
 def index(request):
     user = request.user
     if user.is_authenticated:
+        print(posts)
         return render(request,
-                "Webapp/index.html")
+                "Webapp/index.html",)
+
+
+def posts(request):
+    user = request.user
+    tickets = Ticket.objects.filter(user=user)
+    reviews = Review.objects.filter(user=user)
+
+    posts = sorted(chain(reviews, tickets),
+                    key=lambda post: post.time_created,
+                    reverse=True)
+                    
+    return render(request,
+            "Webapp/posts.html",
+            {"posts" : posts})
+
 
 
 def register(request):
