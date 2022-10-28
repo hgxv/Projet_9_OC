@@ -1,12 +1,12 @@
 from django.forms import CharField
 from django.shortcuts import redirect, render
-from django.db.models import Value
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from Webapp.forms import TicketForm
-from Webapp.models import Ticket, Review
+from Webapp.models import Ticket, Review, UserFollow
 
 from itertools import chain
+
 
 @login_required
 def index(request):
@@ -59,19 +59,64 @@ def ticket(request, ticket_id):
 
 
 def ticket_create(request):
-    print(request.user)
     if request.method == "POST":
-        form = TicketForm(request.POST)
-        if form.is_valid():
-            ticket = form.save(commit=False)
+        ticket_form = TicketForm(request.POST)
+        if ticket_form.is_valid():
+            ticket = ticket_form.save(commit=False)
             ticket.user = request.user
             print(ticket.image)
             ticket.save()
             return redirect("ticket-profil", ticket.id)
     
     else:
-        form = TicketForm()
+        ticket_form = TicketForm()
 
     return render(request,
             "Webapp/ticket_create.html",
-            {"form": form},)
+            {"ticket_form": ticket_form},)
+
+
+def ticket_change(request, ticket_id):
+    ticket = Ticket.objects.get(id=ticket_id)
+
+    if request.method == "POST":
+        ticket_form = TicketForm(request.POST, instance=ticket)
+        if ticket_form.is_valid():
+            ticket = ticket_form.save(commit=False)
+            ticket.user = request.user
+            print(ticket.image)
+            ticket.save()
+            return redirect("ticket-profil", ticket.id)
+    
+    else:
+        ticket_form = TicketForm(instance=ticket)
+
+    return render(request,
+                "Webapp/ticket_create.html",
+                {"ticket_form": ticket_form})
+
+
+def ticket_delete(request, ticket_id):
+    ticket = Ticket.objects.get(id=ticket_id)
+
+    if request.method == 'POST':
+        ticket.delete()
+        return redirect('index')
+
+    return render(request,
+                "Webapp/ticket_delete.html",
+                {"ticket": ticket})
+
+
+def follows(request):
+    user = request.user
+    follows = UserFollow.objects.all().filter(user=user.id)
+    followed = UserFollow.objects.all().filter(followed_user=user.id)
+
+    return render(request,
+                "Webapp/follows.html",
+                {
+                    "user": user,
+                    "follows": follows,
+                    "followed": followed,
+                })

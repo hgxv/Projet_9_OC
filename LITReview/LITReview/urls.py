@@ -28,8 +28,10 @@ urlpatterns = [
     path('registered/', views.registered, name='registered'),
     path('ticket/', views.ticket_create, name='ticket-create'),
     path('ticket/<int:ticket_id>/', views.ticket, name='ticket-profil'),
-    path('ticket/<int:ticket_id>/update', views.ticket, name='ticket-update'),
+    path('ticket/<int:ticket_id>/change', views.ticket_change, name='ticket-change'),
+    path('ticket/<int:ticket_id>/delete', views.ticket_delete, name='ticket-delete'),
     path('posts/', views.posts, name='posts'),
+    path('follows/', views.follows, name='follows'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

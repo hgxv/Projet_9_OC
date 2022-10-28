@@ -12,7 +12,7 @@
         <nav class="navbar navbar-expand">
             <a class="nav-link" href="{% url 'index' %}">Flux</a>
             <a class="nav-link" href="{% url 'posts' %}">Posts</a>
-            <a class="nav-link" href="#">Abonnements</a>
+            <a class="nav-link" href="{% url 'follows' %}">Abonnements</a>
             <a class="nav-link" href="{% url 'logout' %}">Se déconnecter</a>
         </nav>
         {% endif %}

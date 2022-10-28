@@ -1,0 +1,21 @@
+{% extends 'Webapp/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="row centered">
+    <h1>Supprimer le ticket</h1>
+
+    <p>Êtes-vous sûr de vouloir supprimer ce ticket :</p>
+    
+    {% include "Webapp/ticket_snippet.html" %}
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        <a class="btn btn-primary" href="{% url 'index' %}">Retour</a>
+        <input type="submit" class="btn btn-danger" value="Supprimer">
+    </form>
+</div>
+
+
+{% endblock %}
