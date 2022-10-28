@@ -33,6 +33,5 @@ urlpatterns = [
     path('posts/', views.posts, name='posts'),
     path('follows/', views.follows, name='follows'),
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL,
+                    document_root=settings.MEDIA_ROOT)

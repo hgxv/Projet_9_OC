@@ -1,23 +1,21 @@
-<div class="row centered">
-    <div class="col-12">
-        <div class="container ticket">
-            <div class="centered">
-                {% if ticket.user == request.user %}
-                    <p>Vous avez publié un ticket</p>
-                {% endif %}
-                <p>
-                    {{ ticket.title }}
-                    {{ ticket.time_created }}
-                </p>
-                {% if ticket.image %}
-                    <p><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></p>
-                {% endif %}
-        
-                <p>
-                    <a href="{% url 'ticket-change' ticket.id %}" class="btn btn-primary">Modifier</a>
-                    <a href="{% url 'ticket-delete' ticket.id %}" class="btn btn-primary">Supprimer</a>
-                </p>
-            </div>        
-        </div>
+<div class="col-12">
+    <div class="container ticket">
+        <div class="centered">
+            {% if ticket.user == request.user %}
+                <p>Vous avez publié un ticket</p>
+            {% endif %}
+            <p>
+                {{ ticket.title }}
+                {{ ticket.time_created }}
+            </p>
+            {% if ticket.image %}
+                <p><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></p>
+            {% endif %}
+    
+            <p>
+                <a href="{% url 'ticket-change' ticket.id %}" class="btn btn-primary">Modifier</a>
+                <a href="{% url 'ticket-delete' ticket.id %}" class="btn btn-primary">Supprimer</a>
+            </p>
+        </div>        
     </div>
 </div>

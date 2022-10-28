@@ -60,11 +60,10 @@ def ticket(request, ticket_id):
 
 def ticket_create(request):
     if request.method == "POST":
-        ticket_form = TicketForm(request.POST)
+        ticket_form = TicketForm(request.POST, request.FILES)
         if ticket_form.is_valid():
             ticket = ticket_form.save(commit=False)
             ticket.user = request.user
-            print(ticket.image)
             ticket.save()
             return redirect("ticket-profil", ticket.id)
     
@@ -80,7 +79,7 @@ def ticket_change(request, ticket_id):
     ticket = Ticket.objects.get(id=ticket_id)
 
     if request.method == "POST":
-        ticket_form = TicketForm(request.POST, instance=ticket)
+        ticket_form = TicketForm(request.POST, request.FILES, instance=ticket)
         if ticket_form.is_valid():
             ticket = ticket_form.save(commit=False)
             ticket.user = request.user

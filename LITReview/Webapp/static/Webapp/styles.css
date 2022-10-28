@@ -25,3 +25,7 @@ nav {
     width: 60%;
     margin-bottom: 2rem;
 }
+img {
+    max-height: 200px;
+    min-height: 150px;
+}
