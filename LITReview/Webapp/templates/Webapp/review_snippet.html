@@ -25,11 +25,6 @@
                     {% if ticket.image %}
                         <p><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></p>
                     {% endif %}
-            
-                    <p>
-                        <a href="{% url 'ticket-change' ticket.id %}" class="btn btn-primary">Modifier</a>
-                        <a href="{% url 'ticket-delete' ticket.id %}" class="btn btn-primary">Supprimer</a>
-                    </p>
                 </div>        
             </div>
             
