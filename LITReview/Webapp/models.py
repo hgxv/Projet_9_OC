@@ -4,7 +4,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Ticket(models.Model):
     
-    type = "TICKET"
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=2048, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -15,7 +14,6 @@ class Ticket(models.Model):
 
 class Review(models.Model):
     
-    type ="REVIEW"
     ticket = models.ForeignKey(Ticket,
                             blank=True,
                             null=True,
