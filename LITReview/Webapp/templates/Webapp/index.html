@@ -2,10 +2,24 @@
 
 {% block content %}
 
-<p class="centered feed-btn">
-    <a href="{% url 'ticket-create' %}" class="btn btn-primary">Demander une critique</a>
-    <a href="{% url 'review-create' %}" class="btn btn-primary">Créer une critique</a>
-</p>
+<div class="row">
+    <div class="col-12">
+        <div class="centered">
+            <a href="{% url 'ticket-create' %}" class="btn btn-primary">Demander une critique</a>
+            <a href="{% url 'review-create' 0 %}" class="btn btn-primary">Créer une critique</a>
+        </div>    
+    </div>
+
+    <div class="col-12">
+        {% for post in posts %}
+                {% if post.type == 'TICKET' %}
+                    {% include "Webapp/ticket_snippet.html" with ticket=post %}
+                {% else  %}
+                    {% include "Webapp/review_snippet.html" with review=post %}
+                {% endif %}
+        {% endfor %}    
+    </div>
+</div>
 
 {% endblock %}
 

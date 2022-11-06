@@ -1,23 +1,34 @@
-<div class="col-12">
-    <div class="container ticket">
-        <div class="centered">
-            {% if ticket.user == request.user %}
-                <p>Vous avez publié un ticket</p>
-            {% endif %}
-            <p>
-                {{ ticket.title }}
-                {{ ticket.time_created }}
-            </p>
-
-            <p>{{ ticket.description }}</p>
-            {% if ticket.image %}
-                <p><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></p>
-            {% endif %}
+<div class="row">
+    <div class="col-12">
+        <div class="container post">
+            <div class="centered">
+                {% if ticket.user == request.user %}
+                    <p>Vous avez publié un ticket</p>
+                {% else %}
+                    <p>{{ ticket.user }} a publié un ticket</p>
+                {% endif %}
+                <div class="row">
+                    <div class="col">{{ ticket.title }}</div>
+                    <div class="col">{{ ticket.time_created }}</div>
+                </div>
     
-            <p>
-                <a href="{% url 'ticket-change' ticket.id %}" class="btn btn-primary">Modifier</a>
-                <a href="{% url 'ticket-delete' ticket.id %}" class="btn btn-primary">Supprimer</a>
-            </p>
-        </div>        
-    </div>
+                <div class="row">
+                    <p>{{ ticket.description }}</p>
+                </div>
+                {% if ticket.image %}
+                    <p><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></p>
+                {% endif %}
+        
+                <p>
+                    {% if ticket.has_response == False %}
+                        <a href="{% url 'review-create' ticket.id %}" class="btn btn-primary">Répondre</a>
+                    {% endif %}
+                    {% if ticket.user == request.user %}
+                        <a href="{% url 'ticket-change' ticket.id %}" class="btn btn-primary">Modifier</a>
+                        <a href="{% url 'ticket-delete' ticket.id %}" class="btn btn-primary">Supprimer</a>
+                    {% endif %}
+                </p>
+            </div>        
+        </div>
+    </div>    
 </div>

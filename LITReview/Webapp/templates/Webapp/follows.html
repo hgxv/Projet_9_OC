@@ -2,22 +2,25 @@
 
 {% block content %}
 
-<div class="centered">
-    <h2>Abonnements :</h2>
-    {% for people in follows %}
-        <p>
-            {{ people.followed_user.username }}
-            <a href="#" class="btn btn-danger">Désabonner</a>
-        </p>
-    {% endfor %}
+<div class="row centered">
+    <div class="col-12 centered follow_block">
+        <h2>Abonnements :</h2>
+        {% for people in follows %}
+            <p>
+                {{ people.followed_user.username }}
+                <a href="#" class="btn btn-danger">Désabonner</a>
+            </p>
+        {% endfor %}
+    </div>
+
+    <div class="col-12 centered follow_block">
+        <h2>Abonnés :</h2>
+        {% for people in followed %}
+            <p>{{ people.user.username }}</p>
+        {% endfor %}
+    
+    </div>
 </div>
 
-<div class="centered">
-    <h2>Abonnés :</h2>
-    {% for people in followed %}
-        <p>{{ people.user.username }}</p>
-    {% endfor %}
-
-</div>
 
 {% endblock %}

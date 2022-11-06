@@ -3,7 +3,7 @@ from Webapp.models import *
 
 
 class TicketAdmin(admin.ModelAdmin):
-    list_display = ("title", "description", "image")
+    list_display = ("title", "user", "has_response", "image")
 
 
 class ReviewAdmin(admin.ModelAdmin):

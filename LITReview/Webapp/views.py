@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from Webapp.forms import TicketForm, ReviewForm
 from Webapp.models import Ticket, Review, UserFollow
 from django.db.models import CharField, Value
+from django.db.models import Q
 
 from itertools import chain
 
@@ -12,24 +13,35 @@ from itertools import chain
 @login_required
 def index(request):
     user = request.user
-    if user.is_authenticated:
-        print(posts)
-        return render(request,
-                "Webapp/index.html",)
+    request_followed = UserFollow.objects.filter(user=user)
+    followed = [user]
+    for people in request_followed:
+        followed.append(people.followed_user)
 
-
-def posts(request):
-    user = request.user
-    tickets = Ticket.objects.filter(user=user).annotate(type=Value('TICKET', CharField()))
-
-    reviews = Review.objects.filter(user=user).annotate(type=Value('REVIEW', CharField()))
+    tickets = Ticket.objects.filter(user__in=followed).annotate(type=Value('TICKET', CharField()))
+    reviews = Review.objects.filter(
+                            Q(user__in=followed),
+                            Q(ticket__user=user)
+                            ).annotate(type=Value('REVIEW', CharField()))
 
     posts = sorted(chain(reviews, tickets),
                     key=lambda post: post.time_created,
                     reverse=True)
 
-    for ticket in tickets:
-        print(ticket.type)
+    return render(request,
+            "Webapp/index.html",
+            {"posts": posts})
+
+
+def posts(request):
+    user = request.user
+
+    tickets = Ticket.objects.filter(user=user).annotate(type=Value('TICKET', CharField()))
+    reviews = Review.objects.filter(user=user).annotate(type=Value('REVIEW', CharField()))
+
+    posts = sorted(chain(reviews, tickets),
+                    key=lambda post: post.time_created,
+                    reverse=True)
                     
     return render(request,
             "Webapp/posts.html",
@@ -86,8 +98,6 @@ def ticket_change(request, ticket_id):
     if request.method == "POST":
         ticket_form = TicketForm(request.POST, request.FILES, instance=ticket)
         if ticket_form.is_valid():
-            ticket = ticket_form.save(commit=False)
-            ticket.user = request.user
             ticket.save()
             return redirect("ticket-profil", ticket.id)
     
@@ -115,33 +125,37 @@ def review(request, review_id):
     review = Review.objects.get(id=review_id)
     return render(request,
                 "Webapp/review.html",
-                {
-                    "review": review,
-                    "ticket": review.ticket,
-                })
+                {"review": review})
 
 
-def review_create(request, related_ticket_id=None):
-    if related_ticket_id:
-        ticket = related_ticket_id
+def review_create(request, ticket_id):
+
+    if ticket_id != 0:
+        ticket = Ticket.objects.get(id=ticket_id)
+    
+    else:
+        ticket = None
 
     if request.method == "POST":
-        ticket_form = TicketForm(request.POST, request.FILES)
+        ticket_form = TicketForm(request.POST, request.FILES, instance=ticket)
         review_form = ReviewForm(request.POST)
 
         if ticket_form.is_valid() & review_form.is_valid():
             ticket = ticket_form.save(commit=False)
-            ticket.user = request.user
+            if hasattr(ticket, 'user') == False:
+                ticket.user = request.user
+            ticket.has_response = True
             ticket.save()
 
             review = review_form.save(commit=False)
             review.ticket = ticket
             review.user = request.user
             review.save()
+
             return redirect("review-profil", review.id)
 
     else:
-        ticket_form = TicketForm()
+        ticket_form = TicketForm(instance=ticket)
         review_form = ReviewForm()
 
     return render(request,
@@ -173,6 +187,3 @@ def follows(request):
                     "follows": follows,
                     "followed": followed,
                 })
-
-
-# user__followed_user

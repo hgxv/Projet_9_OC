@@ -10,35 +10,39 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <div class="ticket">
-            <p>Ticket</p>
-            <p>{{ ticket_form.errors }}</p>
-
-            <p>Titre :</p>
-            <p>{{ ticket_form.title }}</p>
-            
-            <p>Description :</p>
-            <p>{{ ticket_form.description }}</p>
-            
-            <p>Image :</p>
-            <p>{{ ticket_form.image }}</p>    
+        <div class="container post">
+            <div class="centered">
+                <p>Ticket</p>
+                <p>{{ ticket_form.errors }}</p>
+    
+                <p>Titre :</p>
+                <p>{{ ticket_form.title }}</p>
+                
+                <p>Description :</p>
+                <p>{{ ticket_form.description }}</p>
+                
+                <p>Image :</p>
+                <p>{{ ticket_form.image }}</p>    
+            </div>
         </div>
 
-        <div class="ticket">
-            <p>Critique</p>
-            <p>{{ review_form.errors }}</p>
-
-            <p>Titre :</p>
-            <p>{{ review_form.headline }}</p>
+        <div class="container post">
+            <div class="centered">
+                <p>Critique</p>
+                <p>{{ review_form.errors }}</p>
     
-            <p>Note :</p>
-            <p>{{ review_form.rating }}</p>
-            
-            <p>Commentaire :</p>
-            <p>{{ review_form.body }}</p>    
+                <p>Titre :</p>
+                <p>{{ review_form.headline }}</p>
+        
+                <p>Note :</p>
+                <p>{{ review_form.rating }}</p>
+                
+                <p>Commentaire :</p>
+                <p>{{ review_form.body }}</p>    
+            </div>
         </div>
                 
-        <input class="btn btn-primary" type="submit" value="Envoyer">
+        <input class="btn btn-primary centered" type="submit" value="Envoyer">
     </form>
 </div>
 
