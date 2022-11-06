@@ -1,11 +1,11 @@
 from django.forms import ModelForm
-from Webapp.models import Ticket, Review
+from Webapp.models import Ticket, Review, UserFollow
 
 
 class TicketForm(ModelForm):
     class Meta:
         model = Ticket
-        exclude = ("user",)
+        exclude = ("user", "has_response")
 
 
 class ReviewForm(ModelForm):

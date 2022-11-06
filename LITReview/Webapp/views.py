@@ -18,10 +18,11 @@ def index(request):
     for people in request_followed:
         followed.append(people.followed_user)
 
+    print(followed)
+    
     tickets = Ticket.objects.filter(user__in=followed).annotate(type=Value('TICKET', CharField()))
     reviews = Review.objects.filter(
-                            Q(user__in=followed),
-                            Q(ticket__user=user)
+                            Q(user__in=followed) | Q(ticket__user=user)
                             ).annotate(type=Value('REVIEW', CharField()))
 
     posts = sorted(chain(reviews, tickets),
@@ -179,6 +180,9 @@ def follows(request):
     user = request.user
     follows = UserFollow.objects.all().filter(user=user.id)
     followed = UserFollow.objects.all().filter(followed_user=user.id)
+
+    if request.method == "POST":
+        print(request.POST)
 
     return render(request,
                 "Webapp/follows.html",

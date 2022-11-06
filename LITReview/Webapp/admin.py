@@ -3,11 +3,11 @@ from Webapp.models import *
 
 
 class TicketAdmin(admin.ModelAdmin):
-    list_display = ("title", "user", "has_response", "image")
+    list_display = ("id", "title", "user", "has_response", "image")
 
 
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ("ticket", "rating")
+    list_display = ("user", "ticket", "rating")
 
 class UserFollowAdmin(admin.ModelAdmin):
     list_display = ("user",)

@@ -2,39 +2,49 @@
     margin-top: 2rem;
     display: flex;
 }
+
 .login-row {
     margin-left: 10%;
 }
+
 .centered {
     width: 100%;
 }
+
 .centered form {
     margin-top: 2rem;
 }
+
 .row {
     justify-content: space-evenly;
     width: 80%;
     margin: auto;
     text-align: center;
 }
+
 nav {
     background-color: #e3f2fd;
 }
+
 .post {
     border: solid;
     width: 80%;
     margin-bottom: 2rem;
 }
+
 .review_ticket {
     width: 100%;
 }
+
 .follow_block {
     margin-top: 3em;
 }
+
 img {
     max-height: 200px;
     min-height: 150px;
 }
+
 h2 {
     text-align: center;
 }

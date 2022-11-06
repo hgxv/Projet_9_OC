@@ -10,7 +10,7 @@ class Ticket(models.Model):
     image = models.ImageField(null=True,
                             blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
-    has_response = False
+    has_response = models.BooleanField(default=False)
 
 
 class Review(models.Model):
@@ -19,6 +19,7 @@ class Review(models.Model):
                             blank=True,
                             null=True,
                             on_delete=models.CASCADE)
+
     rating = models.PositiveSmallIntegerField(validators=[
                                             MinValueValidator(0),
                                             MaxValueValidator(5)
