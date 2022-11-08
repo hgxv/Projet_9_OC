@@ -36,6 +36,7 @@ urlpatterns = [
     path('review/<int:review_id>/delete/', views.review_delete, name='review-delete'),
     path('posts/', views.posts, name='posts'),
     path('follows/', views.follows, name='follows'),
+    path('follows/<int:follow_id>/', views.follow_delete, name='follow-delete')
 ]
 urlpatterns += static(settings.MEDIA_URL,
                     document_root=settings.MEDIA_ROOT)

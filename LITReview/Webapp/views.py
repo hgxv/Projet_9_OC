@@ -1,11 +1,14 @@
 from django.forms import CharField
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from Webapp.forms import TicketForm, ReviewForm
 from Webapp.models import Ticket, Review, UserFollow
 from django.db.models import CharField, Value
 from django.db.models import Q
+from django.db import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist
 
 from itertools import chain
 
@@ -182,7 +185,26 @@ def follows(request):
     followed = UserFollow.objects.all().filter(followed_user=user.id)
 
     if request.method == "POST":
-        print(request.POST)
+        to_follow = request.POST.get("username")
+        follow = UserFollow()
+        follow.user = user
+        error = "aaaa"
+
+        try:
+            follow.followed_user = User.objects.get(username=to_follow)
+            if to_follow == user.username:
+                raise ValueError("Same Pseudo")
+
+            follow.save()
+
+        except ObjectDoesNotExist:
+            error = "Cet utilisateur n'existe pas"
+
+        except IntegrityError:
+            error = "Vous suivez déjà cet utilisateur"
+
+        except ValueError:
+            error = "Vous ne pouvez pas vous suivre"       
 
     return render(request,
                 "Webapp/follows.html",
@@ -190,4 +212,15 @@ def follows(request):
                     "user": user,
                     "follows": follows,
                     "followed": followed,
+                    "error": error,
                 })
+
+
+def follow_delete(request, follow_id):
+    follow = UserFollow.objects.get(id=follow_id)
+    followed = follow.followed_user
+    follow.delete()
+
+    return render(request,
+                "Webapp/follow_delete.html",
+                {"followed": followed})
