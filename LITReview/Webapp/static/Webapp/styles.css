@@ -52,3 +52,7 @@ h2 {
 .border {
     border: solid;
 }
+
+.rating {
+    display: inline-block;
+}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Webapp.models import *
+from Webapp.models import Ticket, Review, UserFollow
 
 
 class TicketAdmin(admin.ModelAdmin):
@@ -8,6 +8,7 @@ class TicketAdmin(admin.ModelAdmin):
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ("user", "ticket", "rating")
+
 
 class UserFollowAdmin(admin.ModelAdmin):
     list_display = ("user", "followed_user")

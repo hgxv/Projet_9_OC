@@ -4,10 +4,22 @@
             {% if review.user == request.user %}
                 <p>Vous avez publié une critique</p>
             {% else %}
-                <p>{{ request.user }} a publié une critique</p>
+                <p>{{ review.user }} a publié une critique</p>
             {% endif %}
             <div class="row">
-                <div class="col">{{ review.headline }} - {{ review.rating }}</div>
+                {% if review.rating == 0 %}
+                <div class="col">{{ review.headline }} - ☆☆☆☆☆</div>
+                {% elif review.rating == 1 %}
+                <div class="col">{{ review.headline }} - ★☆☆☆☆</div>
+                {% elif review.rating == 2 %}
+                <div class="col">{{ review.headline }} - ★★☆☆☆</div>
+                {% elif review.rating == 3 %}
+                <div class="col">{{ review.headline }} - ★★★☆☆</div>
+                {% elif review.rating == 4 %}
+                <div class="col">{{ review.headline }} - ★★★★☆</div>
+                {% elif review.rating == 5 %}
+                <div class="col">{{ review.headline }} - ★★★★★</div>
+                {% endif %}
                 <div class="col">{{ review.time_created }}</div>
             </div>
 
@@ -24,18 +36,19 @@
                         {{ review.ticket.title }}
                         {{ review.ticket.time_created }}
                     </p>
-        
+
                     <p>{{ review.ticket.description }}</p>
                     {% if review.ticket.image %}
                         <p><img src="{{ review.ticket.image.url }}" alt="{{ review.ticket.title }}"></p>
                     {% endif %}
                 </div>        
             </div>
-            
-    
+
             <p>
-                <a href="#" class="btn btn-primary">Modifier</a>
-                <a href="#" class="btn btn-primary">Supprimer</a>
+                {% if request.user == review.user %}
+                <a href="{% url 'review-change' review.id %}" class="btn btn-primary">Modifier</a>
+                <a href="{% url 'review-delete' review.id %}" class="btn btn-primary">Supprimer</a>
+                {% endif %}
             </p>
         </div>        
     </div>

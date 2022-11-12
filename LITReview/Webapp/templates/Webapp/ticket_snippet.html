@@ -11,14 +11,14 @@
                     <div class="col">{{ ticket.title }}</div>
                     <div class="col">{{ ticket.time_created }}</div>
                 </div>
-    
+
                 <div class="row">
                     <p>{{ ticket.description }}</p>
                 </div>
                 {% if ticket.image %}
                     <p><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></p>
                 {% endif %}
-        
+
                 <p>
                     {% if ticket.has_response == False %}
                         <a href="{% url 'review-create' ticket.id %}" class="btn btn-primary">Répondre</a>
@@ -28,7 +28,7 @@
                         <a href="{% url 'ticket-delete' ticket.id %}" class="btn btn-primary">Supprimer</a>
                     {% endif %}
                 </p>
-            </div>        
+            </div>
         </div>
     </div>    
 </div>
