@@ -10,8 +10,11 @@ cd NomDuDossier
 py -m venv env
 
 # Activation de l'environnement virtuel
-  # Pour windows:
-  env\scripts\activate
+      # Pour windows:
+      env\scripts\activate
+      
+      #Pour Linux:
+      source bin/env/activate
 
 # Installation des dépendances
 py -m pip install -r requirements.txt
