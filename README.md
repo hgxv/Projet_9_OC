@@ -24,3 +24,7 @@ cd LITReview
 
 # Lancement du serveur virtuel
 py manage.py runserver
+
+
+# PEP 8
+#![image](https://user-images.githubusercontent.com/13985587/202210607-27f596c0-f275-4edd-94a7-8f8ca21d544b.png)
