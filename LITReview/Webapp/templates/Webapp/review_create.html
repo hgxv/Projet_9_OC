@@ -10,21 +10,25 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <div class="container post">
-            <div class="centered">
-                <p>Ticket</p>
-                <p>{{ ticket_form.errors }}</p>
-    
-                <p>Titre :</p>
-                <p>{{ ticket_form.title }}</p>
-                
-                <p>Description :</p>
-                <p>{{ ticket_form.description }}</p>
-                
-                <p>Image :</p>
-                <p>{{ ticket_form.image }}</p>    
+        {% if ticket == None %}
+            <div class="container post">
+                <div class="centered">
+                    <p>Ticket</p>
+                    <p>{{ ticket_form.errors }}</p>
+        
+                    <p>Titre :</p>
+                    <p>{{ ticket_form.title }}</p>
+                    
+                    <p>Description :</p>
+                    <p>{{ ticket_form.description }}</p>
+                    
+                    <p>Image :</p>
+                    <p>{{ ticket_form.image }}</p>    
+                </div>
             </div>
-        </div>
+        {% else %}
+            {% include "Webapp/ticket_snippet.html" with ticket=ticket %}
+        {% endif %}
 
         <div class="container post">
             <div class="centered">

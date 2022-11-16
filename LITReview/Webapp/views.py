@@ -15,7 +15,6 @@ from itertools import chain
 @login_required
 def index(request):
     user = request.user
-    print(type(user))
     request_followed = User.objects.filter(
         Q(followed_by__user=user) | Q(pk=user.pk)
         )
@@ -162,22 +161,32 @@ def review_create(request, ticket_id):
         ticket_form = TicketForm(request.POST, request.FILES, instance=ticket)
         review_form = ReviewForm(request.POST)
 
-        if ticket_form.is_valid() & review_form.is_valid():
-            print(ticket)
-            print(ticket.has_response)
-            ticket = ticket_form.save(commit=False)
-            if hasattr(ticket, 'user') is False:
-                ticket.user = request.user
-            ticket.has_response = True
-            print(ticket.has_response)
-            ticket.save()
+#       Critique sans ticket
+        if ticket is None:
+            if ticket_form.is_valid() & review_form.is_valid():
+                ticket = ticket_form.save(commit=False)
+                if hasattr(ticket, 'user') is False:
+                    ticket.user = request.user
+                ticket.has_response = True
+                ticket.save()
 
-            review = review_form.save(commit=False)
-            review.ticket = ticket
-            review.user = request.user
-            review.save()
+                review = review_form.save(commit=False)
+                review.ticket = ticket
+                review.user = request.user
+                review.save()
 
-            return redirect("review-profil", review.id)
+                return redirect("review-profil", review.id)
+
+#       En réponse à  un ticket
+        else:
+            if review_form.is_valid():
+                review = review_form.save(commit=False)
+                review.ticket = ticket
+                review.user = request.user
+                ticket.has_response = True
+                ticket.save()
+                review.save()
+                return redirect("review-profil", review.id)
 
     else:
         ticket_form = TicketForm(instance=ticket)
@@ -201,21 +210,18 @@ def review_change(request, review_id):
 
     if request.method == "POST":
         review_form = ReviewForm(request.POST, instance=review)
-        ticket_form = TicketForm(request.POST, request.FILES, instance=ticket)
-        if ticket_form.is_valid() & review_form.is_valid():
-            ticket.save()
+        if review_form.is_valid():
             review.save()
             return redirect("review-profil", review.id)
 
     else:
         review_form = ReviewForm(instance=review)
-        ticket_form = TicketForm(instance=ticket)
 
     return render(request,
                   "Webapp/review_create.html",
                   {
-                      "ticket_form": ticket_form,
-                      "review_form": review_form
+                    "ticket": ticket,
+                    "review_form": review_form
                   })
 
 
